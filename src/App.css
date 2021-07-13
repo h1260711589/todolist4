@@ -1,38 +1,156 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin-bottom: 15px;
+}
+
+.addNote {
+  border-radius: 50%;
+  background-color: #1e90ff;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  margin: 10px;
+}
+
+.addNote i {
+  line-height: 30px;
+  font-size: 24px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.reset {
+  display: inline-block;
+  margin-left: 7px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.right-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  background-color: #eeecec;
+  height: 35px;
+  width: 400px;
+  border-radius: 30px;
+}
+
+.icon-chazhao {
+  font-size: 24px;
+}
+
+.find {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 20px;
+  width: 300px;
+  margin-left: 10px;
+}
+
+.reset {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  background-color: #77787b;
+  text-align: center;
+}
+
+.reset i {
+  line-height: 25px;
+  color: white;
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eeecec;
+}
+
+.note-left {
+  margin-left: 10px;
+}
+
+.note-name {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+.note-time {
+  color: #999d9c;
+}
+
+.note-right i {
+  font-size: 25px;
+  margin-right: 5px;
+  color: #72777b;
+}
+
+.icon-arrow-left-bold {
+  color: black !important;
+}
+
+.icon-arrow-down-bold {
+  color: black !important;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.done {
+  width: 20px;
+  height: 20px;
+  border: grey solid 2px;
+  border-radius: 3px;
+  margin-left: 10px;
+  text-align: center;
+}
+
+.done i {
+  font-size: 20px;
+  line-height: 20px;
+  color: grey;
+}
+
+.item-content {
+  margin-left: 10px;
+  width: 250px;
+}
+
+.item-record {
+  font-size: 20px;
+}
+
+.item-time {
+  font-size: 17px;
+  color: grey;
+  margin-top: 2px;
+}
+
+.cancel {
+  margin-left: 150px;
+  background: rgb(248, 8, 8);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+}
+
+.cancel i {
+  font-size: 20px;
+  line-height: 25px;
+}
+
+.line{
+  height: 1px;
+  width: 450px;
+  border-bottom: solid 1px grey;
+  margin: auto;
 }
