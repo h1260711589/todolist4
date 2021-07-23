@@ -1,65 +1,9 @@
-import React, { Component,forwardRef } from 'react'
+import axios from 'axios'
+import React, { Component, forwardRef, useEffect } from 'react'
 import Item from '../Item'
 import Modal from '../Modal'
-import { nanoid } from 'nanoid'
+import PubSub from 'pubsub-js'
 
-
-
-// export default class ItemList extends Component {
-
-//     constructor(props) {
-//         super(props)
-//         this.state = { itemList: [], hidden: true }
-//     }
-
-//     render() {
-//         return (
-//             <div>
-//                 {
-//                     this.state.hidden ? null :
-//                         <div>
-//                             {this.state.itemList.map((item, index) => {
-//                                 return (
-//                                     <div key={item.id}>
-//                                         < Item {...item} removeItem={this.removeItem} />
-//                                         {index == this.state.itemList.length - 1 ? null : <div className='line'></div>}
-//                                     </div>)
-//                             })}
-//                         </div>
-//                 }
-//                 <Modal ref={e => this.Modal = e} addItem={this.addItem} type={0} />
-//             </div>
-//         )
-//     }
-
-//     removeItem = (id) => {
-//         let newArr = this.state.itemList.filter((item) => {
-//             if (item.id !== id)
-//                 return true
-//             else
-//                 return false
-//         })
-//         this.setState({ itemList: newArr })
-//     }
-
-//     showModal = () => {
-//         this.Modal.showModal()
-//     }
-
-//     addItem = (obj) => {
-//         let { itemList } = this.state
-//         let newItemList = [...itemList, obj]
-//         this.setState({ itemList: newItemList })
-//     }
-
-//     hide = () => {
-//         this.setState({ hidden: true })
-//     }
-
-//     appear = () => {
-//         this.setState({ hidden: false })
-//     }
-// }
 
 function ItemList(props, ref) {
     const [itemList, setItemList] = React.useState([])
@@ -67,15 +11,43 @@ function ItemList(props, ref) {
 
     const myModal = React.useRef()
 
+    useEffect(() => {
+        axios({
+            method: 'GET',
+            url: 'http://localhost:3000/item-list',
+            params: {
+                noteId: props.noteId
+            }
+        }).then(value => {
+            setItemList(value.data)
+        })
+    }, [])
+
+    useEffect(() => {
+        PubSub.subscribe('done', (_, data) => {
+            axios({
+                method: 'POST',
+                url: 'http://localhost:3000/item-list/changeDone',
+                data: { ...data, noteId: props.noteId }
+            })
+        })
+
+    }, [])
 
     function removeItem(id) {
-        let newArr = itemList.filter((item) => {
-            if (item.id !== id)
-                return true
-            else
-                return false
+        axios({
+            method: 'POST',
+            url: 'http://localhost:3000/item-list/deleteItem',
+            data: { noteId: props.noteId, itemId: id }
+        }).then(value => {
+            let newArr = itemList.filter((item) => {
+                if (item.id !== id)
+                    return true
+                else
+                    return false
+            })
+            setItemList(newArr)
         })
-        setItemList(newArr)
     }
 
     function showModal() {
@@ -83,8 +55,18 @@ function ItemList(props, ref) {
     }
 
     function addItem(obj) {
-        let newItemList = [...itemList, obj]
-        setItemList(newItemList)
+        axios({
+            method: 'POST',
+            url: 'http://localhost:3000/item-list/addItem',
+            data: {
+                noteId: props.noteId,
+                item: obj
+            }
+        }).then(value => {
+            let newItemList = [...itemList, obj]
+            setItemList(newItemList)
+        })
+
     }
 
     function hide() {
@@ -100,6 +82,8 @@ function ItemList(props, ref) {
         hide: hide,
         appear: appear
     }))
+
+
 
     return (
         <div>
@@ -120,6 +104,6 @@ function ItemList(props, ref) {
     )
 }
 
-ItemList=forwardRef(ItemList)
+ItemList = forwardRef(ItemList)
 
 export default ItemList
